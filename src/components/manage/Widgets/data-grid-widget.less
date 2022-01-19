@@ -1,0 +1,40 @@
+.data-grid-widget {
+  .ui.grid {
+    > .row {
+      &:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      &.bottom-buttons {
+        background: none;
+
+        .column {
+          padding: 1.5rem 0;
+        }
+      }
+
+      .column {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+
+        label {
+          display: block;
+          font-size: 0.8rem;
+        }
+
+        &.field-column {
+          .ui.input {
+            width: 100%;
+          }
+
+          .objectbrowser-field {
+            background-color: #fff;
+            .selected-values {
+              height: 60px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
