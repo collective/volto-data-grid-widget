@@ -22,26 +22,10 @@ const defaultSchema = {
     {
       id: 'default',
       title: 'Default',
-      fields: ['person', 'email', 'phone'],
+      fields: [],
     },
   ],
-  properties: {
-    person: {
-      title: 'Person',
-      widget: 'object_browser',
-      mode: 'link',
-      allowExternals: false,
-
-      widgetOptions: {
-        pattern_options: {
-          selectableTypes: ['Persona'],
-          maximumSelectionSize: 1,
-        },
-      },
-    },
-    email: { title: 'E-mail', type: 'email' },
-    phone: { title: 'Phone' },
-  },
+  properties: {},
   required: [],
 };
 
