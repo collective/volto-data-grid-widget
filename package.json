@@ -1,6 +1,6 @@
 {
   "name": "volto-data-grid-widget",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "volto-data-grid-widget: Volto add-on",
   "main": "src/index.js",
   "license": "MIT",
