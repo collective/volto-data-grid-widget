@@ -1,0 +1,10 @@
+[
+  {
+    "id": "data_grid_widget_add_term",
+    "defaultMessage": "Add term"
+  },
+  {
+    "id": "data_grid_widget_remove_term",
+    "defaultMessage": "Remove term"
+  }
+]

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2021-01-29T12:34:47.097Z\n"
+"POT-Creation-Date: 2022-01-24T15:46:25.887Z\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -12,3 +12,13 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8\n"
 "Domain: volto\n"
+
+#: components/manage/Widgets/DataGridWidget
+# defaultMessage: Add term
+msgid "data_grid_widget_add_term"
+msgstr ""
+
+#: components/manage/Widgets/DataGridWidget
+# defaultMessage: Remove term
+msgid "data_grid_widget_remove_term"
+msgstr ""
