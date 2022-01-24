@@ -31,7 +31,8 @@ const defaultSchema = {
 
 const DataGridWidget = (props) => {
   const intl = useIntl();
-  const { value, id, onChange, schema = defaultSchema } = props; //, required, title, description
+  const { value, id, onChange, items = defaultSchema } = props; //, required, title, description
+  const schema = items;
   const [values, setValues] = useState([]);
 
   useEffect(() => {
