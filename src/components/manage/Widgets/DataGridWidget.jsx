@@ -89,6 +89,10 @@ const DataGridWidget = (props) => {
                         wrapped={false}
                         placeholder={schema.properties[field].title}
                       />
+
+                      <p className="help">
+                        {schema.properties[field].description}
+                      </p>
                     </Grid.Column>
                   ));
                 })}
