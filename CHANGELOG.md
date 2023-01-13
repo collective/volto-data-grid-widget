@@ -1,5 +1,12 @@
 
 
+## [2.1.0](https://github.com/collective/volto-data-grid-widget/compare/v2.0.0...v2.1.0) (2023-01-13)
+
+
+### Features
+
+* added required info on field labels ([709e8cb](https://github.com/collective/volto-data-grid-widget/commit/709e8cb35be3bf3d1628027ca1c76e1818ccf4bb))
+
 ## [2.0.0](https://github.com/collective/volto-data-grid-widget/compare/1.0.3...v2.0.0) (2023-01-13)
 
 
