@@ -3,17 +3,35 @@
   "version": "1.0.3",
   "description": "volto-data-grid-widget: Volto add-on",
   "main": "src/index.js",
+  "repository": "https://github.com/collective/volto-data-grid-widget",
+  "bugs": "https://github.com/collective/volto-data-grid-widget/issues",
+  "homepage": "https://github.com/collective/volto-data-grid-widget#readme",
   "license": "MIT",
   "keywords": [
     "volto-addon",
     "volto",
     "plone",
-    "react"
+    "react",
+    "datagrid",
+    "widget"
   ],
   "scripts": {
     "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon"
   },
-  "dependencies": {
-    "@plone/scripts": "*"
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@plone/scripts": "*",
+    "@release-it/conventional-changelog": "^5.1.1",
+    "husky": "^6.0.0",
+    "release-it": "^15.6.0"
+  },
+  "peerDependencies": {
+    "@plone/volto": ">=16.0.0-alpha.38"
   }
 }
