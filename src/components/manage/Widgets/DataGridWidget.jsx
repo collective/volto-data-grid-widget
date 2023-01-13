@@ -72,7 +72,12 @@ const DataGridWidget = (props) => {
                 {schema.fieldsets.map((fieldset) => {
                   return fieldset.fields.map((field) => (
                     <Grid.Column className="field-column" key={field}>
-                      <label htmlFor={'field-' + field}>
+                      <label
+                        htmlFor={'field-' + field}
+                        className={
+                          schema.required.includes(field) ? 'required' : ''
+                        }
+                      >
                         {schema.properties[field].title}
                       </label>
 
@@ -83,7 +88,7 @@ const DataGridWidget = (props) => {
                         formData={term}
                         focus={false}
                         value={term[field]}
-                        required={schema.required.indexOf(field) !== -1}
+                        required={schema.required.includes(field)}
                         onChange={(id, value) => onChangeTerm(index, id, value)}
                         key={field}
                         wrapped={false}
