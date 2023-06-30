@@ -63,8 +63,8 @@ const DataGridWidget = (props) => {
   };
 
   const allowDelete = widgetOptions?.allow_delete ?? true;
-  const allowAppend = widgetOptions?.allow_append ?? true;
-  // TODO: allow_reorder, allow_insert
+  const allowAppend = widgetOptions?.allow_insert ?? true;
+  // TODO: allow_reorder, auto_append
 
   return (
     <FormFieldWrapper {...props}>
