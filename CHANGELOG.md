@@ -1,5 +1,12 @@
 
 
+## [2.2.0](https://github.com/collective/volto-data-grid-widget/compare/v2.1.0...v2.2.0) (2023-07-03)
+
+
+### Features
+
+* widget_options (allow_delete / allow_append) ([646df7c](https://github.com/collective/volto-data-grid-widget/commit/646df7c575e99dadf25562b0aaefca797306453f))
+
 ## [2.1.0](https://github.com/collective/volto-data-grid-widget/compare/v2.0.0...v2.1.0) (2023-01-13)
 
 
