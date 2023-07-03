@@ -31,7 +31,7 @@ const defaultSchema = {
 
 const DataGridWidget = (props) => {
   const intl = useIntl();
-  const { value, id, onChange, items = defaultSchema } = props; //, required, title, description
+  const { value, id, onChange, items = defaultSchema, widgetOptions } = props; //, required, title, description
   const schema = items;
   const [values, setValues] = useState([]);
 
@@ -61,6 +61,10 @@ const DataGridWidget = (props) => {
 
     handleChangeConfiguration(newValues);
   };
+
+  const allowDelete = widgetOptions?.allow_delete ?? true;
+  const allowAppend = widgetOptions?.allow_insert ?? true;
+  // TODO: allow_reorder, auto_append
 
   return (
     <FormFieldWrapper {...props}>
@@ -101,37 +105,41 @@ const DataGridWidget = (props) => {
                     </Grid.Column>
                   ));
                 })}
-                <Grid.Column width={1} className="term-actions">
+                {allowDelete && (
+                  <Grid.Column width={1} className="term-actions">
+                    <Button
+                      icon="trash"
+                      negative
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        deleteTerm(index);
+                      }}
+                      className="delete-term"
+                      title={intl.formatMessage(messages.deleteTerm)}
+                      size="mini"
+                    />
+                  </Grid.Column>
+                )}
+              </Grid.Row>
+            ))}
+            {allowAppend && (
+              <Grid.Row className="bottom-buttons">
+                <Grid.Column textAlign="center">
                   <Button
-                    icon="trash"
-                    negative
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      deleteTerm(index);
+                      addTerm();
                     }}
-                    className="delete-term"
-                    title={intl.formatMessage(messages.deleteTerm)}
+                    primary
                     size="mini"
-                  />
+                  >
+                    {intl.formatMessage(messages.addTerm)}
+                  </Button>
                 </Grid.Column>
               </Grid.Row>
-            ))}
-            <Grid.Row className="bottom-buttons">
-              <Grid.Column textAlign="center">
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    addTerm();
-                  }}
-                  primary
-                  size="mini"
-                >
-                  {intl.formatMessage(messages.addTerm)}
-                </Button>
-              </Grid.Column>
-            </Grid.Row>
+            )}
           </Grid>
         )}
       </div>
