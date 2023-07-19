@@ -45,7 +45,7 @@ const DataGridWidget = (props) => {
 
   const onChangeTerm = (index, field, value) => {
     let newValues = [...values];
-    newValues[index][field] = value;
+    newValues[index][field] = value || null;
 
     handleChangeConfiguration(newValues);
   };
