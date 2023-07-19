@@ -1,5 +1,12 @@
 
 
+## [2.2.1](https://github.com/collective/volto-data-grid-widget/compare/v2.2.0...v2.2.1) (2023-07-19)
+
+
+### Bug Fixes
+
+* fixed null select value after delete ([#2](https://github.com/collective/volto-data-grid-widget/issues/2)) ([35d7e53](https://github.com/collective/volto-data-grid-widget/commit/35d7e53195475659211e38318cabf69dfa6fc4ba))
+
 ## [2.2.0](https://github.com/collective/volto-data-grid-widget/compare/v2.1.0...v2.2.0) (2023-07-03)
 
 
