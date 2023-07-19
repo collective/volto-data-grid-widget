@@ -45,7 +45,7 @@ const DataGridWidget = (props) => {
 
   const onChangeTerm = (index, field, value) => {
     let newValues = [...values];
-    newValues[index][field] = value;
+    newValues[index][field] = value || null;
 
     handleChangeConfiguration(newValues);
   };
@@ -76,32 +76,13 @@ const DataGridWidget = (props) => {
                 {schema.fieldsets.map((fieldset) => {
                   return fieldset.fields.map((field) => (
                     <Grid.Column className="field-column" key={field}>
-                      <label
-                        htmlFor={'field-' + field}
-                        className={
-                          schema.required.includes(field) ? 'required' : ''
-                        }
-                      >
+                      <label htmlFor={'field-' + field} className={schema.required.includes(field) ? 'required' : ''}>
                         {schema.properties[field].title}
                       </label>
 
-                      <Field
-                        {...schema.properties[field]}
-                        id={field}
-                        fieldSet={fieldset.title.toLowerCase()}
-                        formData={term}
-                        focus={false}
-                        value={term[field]}
-                        required={schema.required.includes(field)}
-                        onChange={(id, value) => onChangeTerm(index, id, value)}
-                        key={field}
-                        wrapped={false}
-                        placeholder={schema.properties[field].title}
-                      />
+                      <Field {...schema.properties[field]} id={field} fieldSet={fieldset.title.toLowerCase()} formData={term} focus={false} value={term[field]} required={schema.required.includes(field)} onChange={(id, value) => onChangeTerm(index, id, value)} key={field} wrapped={false} placeholder={schema.properties[field].title} />
 
-                      <p className="help">
-                        {schema.properties[field].description}
-                      </p>
+                      <p className="help">{schema.properties[field].description}</p>
                     </Grid.Column>
                   ));
                 })}
