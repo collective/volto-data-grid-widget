@@ -1,5 +1,12 @@
 
 
+## [2.2.2](https://github.com/collective/volto-data-grid-widget/compare/v2.2.1...v2.2.2) (2023-10-05)
+
+
+### Bug Fixes
+
+* default fields valuues as null ([57892a5](https://github.com/collective/volto-data-grid-widget/commit/57892a52171aa7ebd830f06f6092dbf457297730))
+
 ## [2.2.1](https://github.com/collective/volto-data-grid-widget/compare/v2.2.0...v2.2.1) (2023-07-19)
 
 
