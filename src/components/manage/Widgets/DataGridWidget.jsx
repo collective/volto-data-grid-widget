@@ -15,8 +15,6 @@ const messages = defineMessages({
   },
 });
 
-const defaultItem = {};
-
 const defaultSchema = {
   fieldsets: [
     {
@@ -34,6 +32,17 @@ const DataGridWidget = (props) => {
   const { value, id, onChange, items = defaultSchema, widgetOptions } = props; //, required, title, description
   const schema = items;
   const [values, setValues] = useState([]);
+  const [defaultItem, setDefaultItem] = useState({});
+
+  useEffect(() => {
+    let default_item = {};
+    if (Object.keys(defaultItem).length == 0) {
+      Object.keys(schema?.properties ?? {})?.forEach((field) => {
+        default_item[field] = null;
+      });
+      setDefaultItem(default_item);
+    }
+  }, [schema]);
 
   useEffect(() => {
     setValues(value?.length > 0 ? value : [{ ...defaultItem }]);
