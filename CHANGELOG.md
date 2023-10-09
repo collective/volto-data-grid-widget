@@ -1,5 +1,12 @@
 
 
+## [2.2.3](https://github.com/collective/volto-data-grid-widget/compare/v2.2.2...v2.2.3) (2023-10-09)
+
+
+### Bug Fixes
+
+* default item value ([a2f13be](https://github.com/collective/volto-data-grid-widget/commit/a2f13be831f152b5d88dcc6994269c162298eb78))
+
 ## [2.2.2](https://github.com/collective/volto-data-grid-widget/compare/v2.2.1...v2.2.2) (2023-10-05)
 
 
