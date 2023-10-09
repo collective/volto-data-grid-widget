@@ -36,17 +36,17 @@ const DataGridWidget = (props) => {
 
   useEffect(() => {
     let default_item = {};
-    if (Object.keys(defaultItem).length == 0) {
-      Object.keys(schema?.properties ?? {})?.forEach((field) => {
+    if (schema.properties && Object.keys(defaultItem).length === 0) {
+      Object.keys(schema?.properties ?? {}).forEach((field) => {
         default_item[field] = null;
       });
       setDefaultItem(default_item);
     }
-  }, [schema]);
+  }, [schema, defaultItem]);
 
   useEffect(() => {
     setValues(value?.length > 0 ? value : [{ ...defaultItem }]);
-  }, [value, value?.length]);
+  }, [value, defaultItem]);
 
   const handleChangeConfiguration = (v) => {
     onChange(id, v);
