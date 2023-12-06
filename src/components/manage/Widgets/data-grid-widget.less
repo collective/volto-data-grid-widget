@@ -1,16 +1,11 @@
 .data-grid-widget {
+  padding: 1rem 0;
+  border-bottom: 1px solid #edf1f2;
+
   .ui.grid {
     > .row {
       &:nth-child(even) {
         background-color: #f9f9f9;
-      }
-
-      &.bottom-buttons {
-        background: none;
-
-        .column {
-          padding: 1.5rem 0;
-        }
       }
 
       .column {
@@ -29,6 +24,7 @@
 
           .objectbrowser-field {
             background-color: #fff;
+
             .selected-values {
               height: 60px;
             }
@@ -39,6 +35,21 @@
           }
         }
       }
+    }
+  }
+
+  .bottom-buttons {
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  .cms-ui .inline.field & .drag.handle.wrapper {
+    top: calc(50% - 0.7em);
+    min-height: unset;
+    line-height: 1.4;
+
+    .icon {
+      margin: 0 4px;
     }
   }
 }
