@@ -2,12 +2,12 @@
   padding: 1rem 0;
   border-bottom: 1px solid #edf1f2;
 
+  > [data-rbd-droppable-id] [data-rbd-draggable-id]:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
   .ui.grid {
     > .row {
-      &:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-
       .column {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
@@ -44,12 +44,11 @@
   }
 
   .cms-ui .inline.field & .drag.handle.wrapper {
-    top: calc(50% - 0.7em);
+    top: calc(50% - 13px);
     min-height: unset;
-    line-height: 1.4;
 
     .icon {
-      margin: 0 4px;
+      margin: 4px;
     }
   }
 }

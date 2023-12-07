@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 import cx from 'classnames';
 import move from 'lodash-move';
-import { FormFieldWrapper, Field } from '@plone/volto/components';
-import DragDropList from '@plone/volto/components/manage/DragDropList/DragDropList';
-import { Grid, Button, Form, Icon } from 'semantic-ui-react';
+import { v4 as uuid } from 'uuid';
+import { FormFieldWrapper, Icon } from '@plone/volto/components';
+import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
+import { Grid, Button, Form } from 'semantic-ui-react';
 import './data-grid-widget.less';
+import TermWidget from 'volto-data-grid-widget/components/manage/Widgets/TermWidget';
 import dragSVG from '@plone/volto/icons/drag.svg';
 
 const messages = defineMessages({
@@ -47,7 +49,9 @@ const DataGridWidget = (props) => {
     fieldSet,
     title,
     noForInFieldLabel,
-  } = props; //, required, title, description
+    reactBeautifulDnd,
+  } = props;
+  const { DragDropContext, Droppable, Draggable } = reactBeautifulDnd;
   const schema = items;
   const [values, setValues] = useState([]);
   const [defaultItem, setDefaultItem] = useState({});
@@ -63,7 +67,11 @@ const DataGridWidget = (props) => {
   }, [schema, defaultItem]);
 
   useEffect(() => {
-    setValues(value?.length > 0 ? value : [{ ...defaultItem }]);
+    setValues(
+      value?.length > 0
+        ? addUuidIfMissing(value)
+        : [{ ...defaultItem, __key__: uuid() }],
+    );
   }, [value, defaultItem]);
 
   const handleChangeConfiguration = (v) => {
@@ -78,7 +86,7 @@ const DataGridWidget = (props) => {
   };
 
   const addTerm = () => {
-    let newValues = [...values, { ...defaultItem }];
+    let newValues = [...values, { ...defaultItem, __key__: uuid() }];
     setValues(newValues);
   };
 
@@ -97,8 +105,8 @@ const DataGridWidget = (props) => {
 
   const allowDelete = widgetOptions?.allow_delete ?? true;
   const allowAppend = widgetOptions?.allow_insert ?? true;
-  const allowReorder = widgetOptions?.allow_insert ?? true;
-  // TODO: auto_append
+  const allowReorder = widgetOptions?.allow_reorder ?? false;
+  // TODO: auto_append (it is true by default in the classic widget)
 
   return (
     <FormFieldWrapper {...props} wrapped={false}>
@@ -123,60 +131,22 @@ const DataGridWidget = (props) => {
                   id={`fieldset-${fieldSet}-field-label-${id}`}
                   htmlFor={noForInFieldLabel ? null : `field-${id}`}
                 >
-                  {/* <i
-                    aria-hidden="true"
-                    className="grey bars icon drag handle"
-                  /> */}
                   {title}
                 </label>
               </div>
-              {/* {onEdit && !isDisabled && (
-                <div className="toolbar" style={{ zIndex: '2' }}>
-                  <button
-                    aria-label={intl.formatMessage(messages.edit)}
-                    className="item ui noborder button"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      onEdit(id);
-                    }}
-                  >
-                    <IconOld name="write square" size="large" color="blue" />
-                  </button>
-                  <button
-                    aria-label={intl.formatMessage(messages.delete)}
-                    className="item ui noborder button"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      onDelete(id);
-                    }}
-                  >
-                    <IconOld name="close" size="large" color="red" />
-                  </button>
-                </div>
-              )} */}
               {description && (
-                <Grid.Row stretched>
-                  <Grid.Column stretched width="12">
-                    <p className="help">
-                      {multilingual_options
-                        ? `${intl.formatMessage(
-                            messages.language_independent,
-                          )} `
-                        : null}
-                      {description}
-                    </p>
-                  </Grid.Column>
-                </Grid.Row>
+                <p className="help">
+                  {multilingual_options
+                    ? `${intl.formatMessage(messages.language_independent)} `
+                    : null}
+                  {description}
+                </p>
               )}
               <div className="data-grid-widget">
                 {schema && (
                   <>
-                    <DragDropList
-                      childList={values.map((term, index) => [
-                        index.toString(),
-                        term,
-                      ])}
-                      onMoveItem={(result) => {
+                    <DragDropContext
+                      onDragEnd={(result) => {
                         const { source, destination } = result;
                         if (!destination) {
                           return;
@@ -184,89 +154,84 @@ const DataGridWidget = (props) => {
                         moveTerm(source.index, destination.index);
                         return true;
                       }}
-                      as={(props) => (
-                        <Grid {...props} stackable columns="equal" />
-                      )}
                     >
-                      {({ child: term, childId, index, draginfo }) => {
-                        return (
-                          <Grid.Row key={childId} stretched>
-                            {allowReorder && (
-                              <div
-                                style={{
-                                  display: 'inline-block',
-                                }}
-                                {...draginfo.dragHandleProps}
-                                className="drag handle wrapper"
-                              >
-                                <Icon name={dragSVG} size="18px" />
-                              </div>
-                            )}
-                            {schema.fieldsets.map((fieldset) => {
-                              return fieldset.fields.map((field) => (
-                                <Grid.Column
-                                  className="field-column"
-                                  key={field}
+                      <Droppable droppableId={`droppable-field-${id}`}>
+                        {(provided, snapshot) => {
+                          return (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                              style={getListStyle(snapshot.isDraggingOver)}
+                            >
+                              {values?.map((term, index) => (
+                                <Draggable
+                                  key={term.__key__}
+                                  draggableId={term.__key__}
+                                  index={index}
+                                  isDragDisabled={!allowReorder}
                                 >
-                                  <label
-                                    htmlFor={'field-' + field}
-                                    className={
-                                      schema.required.includes(field)
-                                        ? 'required'
-                                        : ''
-                                    }
-                                  >
-                                    {schema.properties[field].title}
-                                  </label>
-
-                                  <Field
-                                    {...schema.properties[field]}
-                                    id={field}
-                                    fieldSet={fieldset.title.toLowerCase()}
-                                    formData={term}
-                                    focus={false}
-                                    value={term[field]}
-                                    required={schema.required.includes(field)}
-                                    onChange={(id, value) =>
-                                      onChangeTerm(index, id, value)
-                                    }
-                                    key={field}
-                                    wrapped={false}
-                                    placeholder={schema.properties[field].title}
-                                  />
-
-                                  <p className="help">
-                                    {schema.properties[field].description}
-                                  </p>
-                                </Grid.Column>
-                              ));
-                            })}
-                            {allowDelete && (
-                              <Grid.Column
-                                width={1}
-                                className="term-actions"
-                                verticalAlign="middle"
-                              >
-                                <Button
-                                  icon="trash"
-                                  negative
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    deleteTerm(index);
-                                  }}
-                                  className="delete-term"
-                                  title={intl.formatMessage(
-                                    messages.deleteTerm,
+                                  {(provided, snapshot) => (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      style={getItemStyle(
+                                        snapshot.isDragging,
+                                        provided.draggableProps.style,
+                                      )}
+                                    >
+                                      <Grid stackable columns="equal">
+                                        <Grid.Row stretched>
+                                          <div
+                                            style={{
+                                              display: allowReorder
+                                                ? 'inline-block'
+                                                : 'none',
+                                            }}
+                                            {...provided.dragHandleProps}
+                                            className="drag handle wrapper"
+                                          >
+                                            <Icon name={dragSVG} size="18px" />
+                                          </div>
+                                          <TermWidget
+                                            schema={schema}
+                                            term={term}
+                                            onChangeTerm={onChangeTerm}
+                                            index={index}
+                                          />
+                                          {allowDelete && (
+                                            <Grid.Column
+                                              width={1}
+                                              className="term-actions"
+                                              verticalAlign="middle"
+                                            >
+                                              <Button
+                                                icon="trash"
+                                                negative
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  e.stopPropagation();
+                                                  deleteTerm(index);
+                                                }}
+                                                className="delete-term"
+                                                title={intl.formatMessage(
+                                                  messages.deleteTerm,
+                                                )}
+                                                size="mini"
+                                              />
+                                            </Grid.Column>
+                                          )}
+                                        </Grid.Row>
+                                      </Grid>
+                                    </div>
                                   )}
-                                  size="mini"
-                                />
-                              </Grid.Column>
-                            )}
-                          </Grid.Row>
-                        );
-                      }}
-                    </DragDropList>
+                                </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </div>
+                          );
+                        }}
+                      </Droppable>
+                    </DragDropContext>
                     {allowAppend && (
                       <div className="bottom-buttons">
                         <Button
@@ -293,4 +258,36 @@ const DataGridWidget = (props) => {
   );
 };
 
-export default DataGridWidget;
+export default injectLazyLibs('reactBeautifulDnd')(DataGridWidget);
+
+const getItemStyle = (isDragging, draggableStyle) => {
+  return {
+    // some basic styles to make the items look a bit nicer
+    width: '100%',
+    userSelect: 'none',
+    cursor: isDragging ? 'grabbing !important' : undefined,
+    // change background colour if dragging
+    background: isDragging ? '#f3f3f3' : undefined,
+    borderRadius: isDragging ? '4px' : undefined,
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  };
+};
+
+const getListStyle = (isDraggingOver) => ({
+  border: isDraggingOver ? '1px solid #eee' : undefined,
+  borderRadius: isDraggingOver ? '4px' : undefined,
+});
+
+const addUuidIfMissing = (value) => {
+  if (value?.length > 0) {
+    return value.map((item) => {
+      if (!item.__key__) {
+        item.__key__ = uuid();
+      }
+      return item;
+    });
+  }
+  return value;
+};
