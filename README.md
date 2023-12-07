@@ -50,7 +50,7 @@ It displays fields based on field schema.
 
 #### Other options
 
-These options can be added in the `frontendOption` of the widget when defining the schema in the backend.
+These options can be added in the `frontendOptions` of the widget when defining the schema in the backend.
 
 | Option          | Default value |
 | --------------- | ------------- |
