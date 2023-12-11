@@ -1,5 +1,12 @@
 
 
+## [2.3.0](https://github.com/collective/volto-data-grid-widget/compare/v2.2.3...v2.3.0) (2023-12-11)
+
+
+### Features
+
+* widget is now sortable ([#3](https://github.com/collective/volto-data-grid-widget/issues/3)) ([f38567a](https://github.com/collective/volto-data-grid-widget/commit/f38567ab807f68da895bd13343391c404e8cda2c))
+
 ## [2.2.3](https://github.com/collective/volto-data-grid-widget/compare/v2.2.2...v2.2.3) (2023-10-09)
 
 
