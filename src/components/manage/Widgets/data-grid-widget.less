@@ -1,18 +1,13 @@
 .data-grid-widget {
+  padding: 1rem 0;
+  border-bottom: 1px solid #edf1f2;
+
+  > [data-rbd-droppable-id] [data-rbd-draggable-id]:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
   .ui.grid {
     > .row {
-      &:nth-child(even) {
-        background-color: #f9f9f9;
-      }
-
-      &.bottom-buttons {
-        background: none;
-
-        .column {
-          padding: 1.5rem 0;
-        }
-      }
-
       .column {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
@@ -29,6 +24,7 @@
 
           .objectbrowser-field {
             background-color: #fff;
+
             .selected-values {
               height: 60px;
             }
@@ -39,6 +35,20 @@
           }
         }
       }
+    }
+  }
+
+  .bottom-buttons {
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  .cms-ui .inline.field & .drag.handle.wrapper {
+    top: calc(50% - 13px);
+    min-height: unset;
+
+    .icon {
+      margin: 4px;
     }
   }
 }

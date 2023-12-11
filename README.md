@@ -47,3 +47,13 @@ It displays fields based on field schema.
   required: [],
 };
 ```
+
+#### Other options
+
+These options can be added in the `frontendOptions` of the widget when defining the schema in the backend.
+
+| Option          | Default value |
+| --------------- | ------------- |
+| `allow_delete`  | `true`        |
+| `allow_insert`  | `true`        |
+| `allow_reorder` | `false`       |
