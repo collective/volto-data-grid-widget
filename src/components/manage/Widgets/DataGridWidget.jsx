@@ -40,7 +40,6 @@ const DataGridWidget = (props) => {
     id,
     onChange,
     items = defaultSchema,
-    widgetOptions,
     required = false,
     error = [],
     multilingual_options,
@@ -50,6 +49,10 @@ const DataGridWidget = (props) => {
     title,
     noForInFieldLabel,
     reactBeautifulDnd,
+    allow_delete = true,
+    allow_append = true,
+    allow_reorder = false,
+    // TODO: auto_append (it is true by default in the classic widget)
   } = props;
   const { DragDropContext, Droppable, Draggable } = reactBeautifulDnd;
   const schema = items;
@@ -102,11 +105,6 @@ const DataGridWidget = (props) => {
 
     handleChangeConfiguration(newValues);
   };
-
-  const allowDelete = widgetOptions?.allow_delete ?? true;
-  const allowAppend = widgetOptions?.allow_insert ?? true;
-  const allowReorder = widgetOptions?.allow_reorder ?? false;
-  // TODO: auto_append (it is true by default in the classic widget)
 
   return (
     <FormFieldWrapper {...props} wrapped={false}>
@@ -168,7 +166,7 @@ const DataGridWidget = (props) => {
                                   key={term.__key__}
                                   draggableId={term.__key__}
                                   index={index}
-                                  isDragDisabled={!allowReorder}
+                                  isDragDisabled={!allow_reorder}
                                 >
                                   {(provided, snapshot) => (
                                     <div
@@ -183,7 +181,7 @@ const DataGridWidget = (props) => {
                                         <Grid.Row stretched>
                                           <div
                                             style={{
-                                              display: allowReorder
+                                              display: allow_reorder
                                                 ? 'inline-block'
                                                 : 'none',
                                             }}
@@ -198,7 +196,7 @@ const DataGridWidget = (props) => {
                                             onChangeTerm={onChangeTerm}
                                             index={index}
                                           />
-                                          {allowDelete && (
+                                          {allow_delete && (
                                             <Grid.Column
                                               width={1}
                                               className="term-actions"
@@ -232,7 +230,7 @@ const DataGridWidget = (props) => {
                         }}
                       </Droppable>
                     </DragDropContext>
-                    {allowAppend && (
+                    {allow_append && (
                       <div className="bottom-buttons">
                         <Button
                           onClick={(e) => {
