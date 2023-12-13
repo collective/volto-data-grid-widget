@@ -1,5 +1,12 @@
 
 
+## [2.3.1](https://github.com/collective/volto-data-grid-widget/compare/v2.3.0...v2.3.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* widget options are now read correctly ([9d41b26](https://github.com/collective/volto-data-grid-widget/commit/9d41b268dae36de85ea1322334239997f7741934))
+
 ## [2.3.0](https://github.com/collective/volto-data-grid-widget/compare/v2.2.3...v2.3.0) (2023-12-11)
 
 
