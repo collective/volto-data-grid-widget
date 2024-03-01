@@ -7,6 +7,7 @@ import { FormFieldWrapper, Icon } from '@plone/volto/components';
 import { injectLazyLibs } from '@plone/volto/helpers/Loadable/Loadable';
 import { Grid, Button, Form } from 'semantic-ui-react';
 import './data-grid-widget.less';
+import Extender from 'volto-data-grid-widget/components/Extender';
 import TermWidget from 'volto-data-grid-widget/components/manage/Widgets/TermWidget';
 import dragSVG from '@plone/volto/icons/drag.svg';
 
@@ -83,7 +84,13 @@ const DataGridWidget = (props) => {
 
   const onChangeTerm = (index, field, value) => {
     let newValues = [...values];
-    newValues[index][field] = value || null;
+    if (field) {
+      newValues[index][field] = value || null;
+    } else {
+      //change all fields of term
+      newValues[index] = value || null;
+      newValues[index].__key__ = values[index].__key__; //no change __key__ field
+    }
 
     handleChangeConfiguration(newValues);
   };
@@ -131,6 +138,14 @@ const DataGridWidget = (props) => {
                 >
                   {title}
                 </label>
+                <Extender
+                  name="label"
+                  field={id}
+                  contentType={props.formData?.['@type']}
+                  value={value}
+                  title={title}
+                  onChange={(field, value) => handleChangeConfiguration(value)}
+                />
               </div>
               {description && (
                 <p className="help">
@@ -177,49 +192,67 @@ const DataGridWidget = (props) => {
                                         provided.draggableProps.style,
                                       )}
                                     >
-                                      <Grid stackable columns="equal">
-                                        <Grid.Row stretched>
-                                          <div
-                                            style={{
-                                              display: allow_reorder
-                                                ? 'inline-block'
-                                                : 'none',
-                                            }}
-                                            {...provided.dragHandleProps}
-                                            className="drag handle wrapper"
-                                          >
-                                            <Icon name={dragSVG} size="18px" />
-                                          </div>
-                                          <TermWidget
-                                            schema={schema}
-                                            term={term}
-                                            onChangeTerm={onChangeTerm}
-                                            index={index}
-                                          />
-                                          {allow_delete && (
-                                            <Grid.Column
-                                              width={1}
-                                              className="term-actions"
-                                              verticalAlign="middle"
+                                      <div className="item-wrapper">
+                                        <Extender
+                                          name="item"
+                                          field={id}
+                                          contentType={
+                                            props.formData?.['@type']
+                                          }
+                                          value={term}
+                                          title={'Riga ' + (index + 1)}
+                                          onChange={(field, value) => {
+                                            onChangeTerm(index, null, value);
+                                          }}
+                                        />
+                                        <Grid stackable columns="equal">
+                                          <Grid.Row stretched>
+                                            <div
+                                              style={{
+                                                display: allow_reorder
+                                                  ? 'inline-block'
+                                                  : 'none',
+                                              }}
+                                              {...provided.dragHandleProps}
+                                              className="drag handle wrapper"
                                             >
-                                              <Button
-                                                icon="trash"
-                                                negative
-                                                onClick={(e) => {
-                                                  e.preventDefault();
-                                                  e.stopPropagation();
-                                                  deleteTerm(index);
-                                                }}
-                                                className="delete-term"
-                                                title={intl.formatMessage(
-                                                  messages.deleteTerm,
-                                                )}
-                                                size="mini"
+                                              <Icon
+                                                name={dragSVG}
+                                                size="18px"
                                               />
-                                            </Grid.Column>
-                                          )}
-                                        </Grid.Row>
-                                      </Grid>
+                                            </div>
+
+                                            <TermWidget
+                                              schema={schema}
+                                              term={term}
+                                              onChangeTerm={onChangeTerm}
+                                              index={index}
+                                            />
+                                            {allow_delete && (
+                                              <Grid.Column
+                                                width={1}
+                                                className="term-actions"
+                                                verticalAlign="middle"
+                                              >
+                                                <Button
+                                                  icon="trash"
+                                                  negative
+                                                  onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    deleteTerm(index);
+                                                  }}
+                                                  className="delete-term"
+                                                  title={intl.formatMessage(
+                                                    messages.deleteTerm,
+                                                  )}
+                                                  size="mini"
+                                                />
+                                              </Grid.Column>
+                                            )}
+                                          </Grid.Row>
+                                        </Grid>
+                                      </div>
                                     </div>
                                   )}
                                 </Draggable>
