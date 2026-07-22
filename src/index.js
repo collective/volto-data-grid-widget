@@ -1,5 +1,6 @@
 import DataGridWidget from './components/manage/Widgets/DataGridWidget.jsx';
-export { DataGridWidget };
+import DataGridWidgetExtender from './components/Extender.jsx';
+export { DataGridWidget, DataGridWidgetExtender };
 
 const applyConfig = (config) => {
   config.widgets.widget.data_grid = DataGridWidget;

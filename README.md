@@ -57,3 +57,28 @@ These options can be added in the `frontendOptions` of the widget when defining 
 | `allow_delete`  | `true`        |
 | `allow_insert`  | `true`        |
 | `allow_reorder` | `false`       |
+
+### Extender
+
+You can add extender for 'label' and 'item' per content-type per field and use your component, by configuring in config:
+
+```
+config.widgets = {
+    ...(config.widgets ?? {}),
+    data_grid: {
+      ...(config.widgets?.data_grid ?? {}),
+      extender: {
+        ...(config.widgets?.data_grid?.extender ?? {}),
+        //'contenttypeName_fieldName_extenderName':(props)=>{}
+        PrenotazioniFolder_week_table_label: (props) => {
+          return <MyComponent {...props} />;
+        },
+        PrenotazioniFolder_week_table_item: (props) => {
+          return (
+            <MyComponent {...props} />;
+          );
+        },
+      },
+    },
+  };
+```
