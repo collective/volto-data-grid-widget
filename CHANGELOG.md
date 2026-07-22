@@ -1,5 +1,17 @@
 
 
+## [2.4.0](https://github.com/collective/volto-data-grid-widget/compare/v2.3.1...v2.4.0) (2026-07-22)
+
+
+### Features
+
+* added widget extender ([16220a4](https://github.com/collective/volto-data-grid-widget/commit/16220a428ccddd23de21183ca89e25ac97ce487d))
+
+
+### Maintenance
+
+* upgraded readme ([50bb637](https://github.com/collective/volto-data-grid-widget/commit/50bb637ef37a2831282c212781218bca0a89dbb9))
+
 ## [2.3.1](https://github.com/collective/volto-data-grid-widget/compare/v2.3.0...v2.3.1) (2023-12-13)
 
 
