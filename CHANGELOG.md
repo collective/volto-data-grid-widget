@@ -1,5 +1,12 @@
 
 
+## [2.4.1](https://github.com/collective/volto-data-grid-widget/compare/v2.4.0...v2.4.1) (2026-08-05)
+
+
+### Bug Fixes
+
+* unique id per row in TermWidget to avoid cross-row checkbox toggle ([1d9ee54](https://github.com/collective/volto-data-grid-widget/commit/1d9ee547f17604ecb3321592be49de7b26e067fb))
+
 ## [2.4.0](https://github.com/collective/volto-data-grid-widget/compare/v2.3.1...v2.4.0) (2026-07-22)
 
 
