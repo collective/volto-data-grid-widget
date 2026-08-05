@@ -6,7 +6,7 @@ export default function TermWidget({ schema, term, onChangeTerm, index }) {
     return fieldset.fields.map((field) => (
       <Grid.Column className="field-column" key={field}>
         <label
-          htmlFor={'field-' + field}
+          htmlFor={`field-${field}-${index}`}
           className={schema.required.includes(field) ? 'required' : ''}
         >
           {schema.properties[field].title}
@@ -14,13 +14,13 @@ export default function TermWidget({ schema, term, onChangeTerm, index }) {
 
         <Field
           {...schema.properties[field]}
-          id={field}
+          id={`${field}-${index}`}
           fieldSet={fieldset.title.toLowerCase()}
           formData={term}
           focus={false}
           value={term[field]}
           required={schema.required.includes(field)}
-          onChange={(id, value) => onChangeTerm(index, id, value)}
+          onChange={(_id, value) => onChangeTerm(index, field, value)}
           key={field}
           wrapped={false}
           placeholder={schema.properties[field].title}
